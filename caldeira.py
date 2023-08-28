@@ -4,9 +4,8 @@ import random
 def calculos(temperatura, pressao, Volume_Agua0, tempo_max, t):
     # loop do tempo
     tempo_max = int(tempo_max)
-    #tempo_loop = tempo_max + 1
-    for loop in range(tempo_max):
-        #t += 1
+    tempo_loop = tempo_max + 1
+    for loop in range(tempo_loop):
         # Cálculo do Volume de Água
         VolumeAgua=Volume_Agua0*(1-(t/tempo_max)/(1+0.01*math.cos(t)))-1*random.uniform(1, 10)
 
@@ -20,15 +19,15 @@ def calculos(temperatura, pressao, Volume_Agua0, tempo_max, t):
         print('='*130)
         print(f'Os valores são: Tempo = {dados[0]}; Volume de Água = {dados[1]}; Pressão = {dados[2]}; Temperatura = {dados[3]}')
         if dados[1] < 20:
-            print(f'O volume de água não atingiu o valor mínimo a partir do tempo {dados[0]}.')
+            print(f'O volume de água não atingiu o valor mínimo a partir do minuto {dados[0]}.')
             print('='*130)
             break
         elif dados[2] > 80:
-            print(f'O valor da pressão excedeu o limite a partir do tempo {dados[0]}.')
+            print(f'O valor da pressão excedeu o limite a partir do minuto {dados[0]}.')
             print('='*130)
             break
         elif dados[3] > 90:
-            print(f'O valor da temperatura excedeu o limite a partir do tempo {dados[0]}.')
+            print(f'O valor da temperatura excedeu o limite a partir do minuto {dados[0]}.')
             print('='*130)
             break
         print('='*130)
@@ -61,22 +60,20 @@ while continuar != 'n':
                 break
 
     while True:  # Variável Volume de Água Inicial
-        Volume_Agua0 = (input('Digite o volume inicial de água em litros (Entre 20 e 50 Litros):'))
-        if Volume_Agua0.isdigit() == False:
+        try:
+            Volume_Agua0 = float(input('Digite o volume inicial de água em litros (Entre 20 e 50 Litros):'))
+            if Volume_Agua0 < 20 or Volume_Agua0 > 50: raise ValueError
+        except ValueError:
             print('Por favor, digite um valor numérico válido para o volume inicial de água.')
-        elif Volume_Agua0.isdigit() == True:
-            Volume_Agua0 = float(Volume_Agua0)
-            if Volume_Agua0 < 20 or Volume_Agua0 > 50:
-                print('Por favor, digite um valor válido para o volume inicial de água.')
-            else:
-                break
+        else:
+            break
         
     calculos(temperatura, pressao, Volume_Agua0, tempo_max, t)
     
     continuar = input('Você deseja executar o programa novamente? (Pressione qualquer tecla para continuar ou "n" para sair.): ')
     continuar = continuar.lower()
     if continuar == 'n':
-        print('Obrigado por utilizar o programa!')
+        print('Obrigado por utilizar o software!')
 
         #temperatura inicial = 0 pressão inicial = 0
         #Tempo máximo e volume inicial de água.
